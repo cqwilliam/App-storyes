@@ -18,9 +18,17 @@ const Login = () => {
     const contrasena = e.target.password.value;
 
     if (registrando) {
-      await createUserWithEmailAndPassword(auth, correo, contrasena);
+      try {
+        await createUserWithEmailAndPassword(auth, correo, contrasena);
+      } catch (err) {
+        alert("la contraseña debe de tener mas de 8 caraceres");
+      }
     } else {
-      await signInWithEmailAndPassword(auth, correo, contrasena);
+      try {
+        await signInWithEmailAndPassword(auth, correo, contrasena);
+      } catch (error) {
+        alert("el correo o contraseña son incorrectos");
+      }
     }
   };
 
