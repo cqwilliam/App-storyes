@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-// import appFirebase from "../credentials";
+import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { db } from "../credentials";
+import appFirebase, { db } from "../credentials";
+import { getAuth } from "firebase/auth";
+
 import {
   getDocs,
   collection,
@@ -9,6 +10,10 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+// importar props
+import PropTypes from "prop-types";
+
+const auth = getAuth(appFirebase);
 
 const Home = ({ correoUsuario }) => {
   const [postsLists, setPostsLists] = useState([]);
@@ -36,14 +41,17 @@ const Home = ({ correoUsuario }) => {
       }
     };
     getPostsLists();
-  }, []);
+  }, [postsCollectionRef]);
 
   const onSubmitPosts = async () => {
     try {
       await addDoc(postsCollectionRef, {
         title: newTitle,
         subtitle: newSubTitle,
+        author: correoUsuario, // Agregar el autor del post
       });
+      setNewtitle("");
+      setNewSubTitle("");
     } catch (err) {
       console.error(err);
     }
@@ -78,8 +86,8 @@ const Home = ({ correoUsuario }) => {
           <div key={posts.id}>
             <h1>{posts.title}</h1>
             <p>{posts.subtitle}</p>
+            <p>Publicado por: {posts.author}</p> {/* Mostrar el autor */}
             <button onClick={() => deletePost(posts.id)}>Eliminar</button>
-            {/* <button>ACTUALIZAR</button> */}
           </div>
         ))}
       </div>
@@ -87,3 +95,13 @@ const Home = ({ correoUsuario }) => {
   );
 };
 export default Home;
+
+//como usar propTypes
+Home.propTypes = {
+  correoUsuario: PropTypes.string,
+};
+
+// usar default PropTypes (opcional)
+Home.defaultProps = {
+  correoUsuario: "any",
+};

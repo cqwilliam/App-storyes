@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-
+import { useState } from "react";
 import appFirebase from "../credentials";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+
 
 const auth = getAuth(appFirebase);
 
@@ -33,10 +33,10 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <form action="" onSubmit={funcAuth}>
-        <input type="text" placeholder="Correo" id="email" />
-        <input type="password" placeholder="Contraseña" id="password" />
+    <div className="">
+      <form className="formulario" action="" onSubmit={funcAuth}>
+        <input className="input_form" type="text" placeholder="Correo" id="email" />
+        <input className="input_form" type="password" placeholder="Contraseña" id="password" />
         <button>{registrando ? "registrate" : "iniciar sesion"}</button>
       </form>
       <h4>
