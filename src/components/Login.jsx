@@ -33,14 +33,15 @@ const Login = () => {
   };
 
   return (
-    <div className="">
-      <form className="formulario" action="" onSubmit={funcAuth}>
-        <input className="input_form" type="text" placeholder="Correo" id="email" />
-        <input className="input_form" type="password" placeholder="Contraseña" id="password" />
+    <div className="bg-black grid justify-center items-center h-72 p-10 rounded-md">
+      <h1 className="text-center text-red-600 font-bold">{registrando? 'REGISTRARSE': 'INICIAR SESION'}</h1>
+      <form className="grid gap-3 " action="" onSubmit={funcAuth}>
+        <input className="text-black text-center" type="text" placeholder="Correo" id="email" />
+        <input className="text-black text-center" type="password" placeholder="Contraseña" id="password" />
         <button>{registrando ? "registrate" : "iniciar sesion"}</button>
       </form>
       <h4>
-        {registrando ? "si tienes cuenta" : "no tienes una cuenta"}
+        {registrando ? "¿Ya tienes cuenta? " : "¿No tienes una cuenta? "}
         <button onClick={() => setRegistrando(!registrando)}>
           {registrando ? "inicia sesion" : "registrate"}
         </button>

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import appFirebase, { db } from "../credentials";
 import { getAuth } from "firebase/auth";
-
 import {
   getDocs,
   collection,
@@ -10,20 +9,15 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-// importar props
 import PropTypes from "prop-types";
+import Post from "./Post"; // Importa el nuevo componente
 
 const auth = getAuth(appFirebase);
 
 const Home = ({ correoUsuario }) => {
   const [postsLists, setPostsLists] = useState([]);
-
-  //new posts states
-  const [newTitle, setNewtitle] = useState("");
+  const [newTitle, setNewTitle] = useState("");
   const [newSubTitle, setNewSubTitle] = useState("");
-
-  //update posts states
-  // const [updateTitle, setUpdateTitle]=
   const postsCollectionRef = collection(db, "posts");
 
   useEffect(() => {
@@ -35,7 +29,6 @@ const Home = ({ correoUsuario }) => {
           id: doc.id,
         }));
         setPostsLists(filterData);
-        // console.log(filterData)
       } catch (err) {
         console.error(err);
       }
@@ -48,9 +41,9 @@ const Home = ({ correoUsuario }) => {
       await addDoc(postsCollectionRef, {
         title: newTitle,
         subtitle: newSubTitle,
-        author: correoUsuario, // Agregar el autor del post
+        author: correoUsuario,
       });
-      setNewtitle("");
+      setNewTitle("");
       setNewSubTitle("");
     } catch (err) {
       console.error(err);
@@ -63,8 +56,8 @@ const Home = ({ correoUsuario }) => {
   };
 
   return (
-    <div>
-      Estas en la página Home{correoUsuario}
+    <div className="">
+      Estás en la página Home{correoUsuario}
       <div>
         <button onClick={() => signOut(auth)}>Logout</button>
       </div>
@@ -72,36 +65,32 @@ const Home = ({ correoUsuario }) => {
         <input
           type="text"
           placeholder="Escribe el título"
-          onChange={(e) => setNewtitle(e.target.value)}
+          // value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
         />
         <input
           type="text"
-          placeholder="aqui va un subtitulo"
+          placeholder="Aquí va un subtítulo"
+          // value={newSubTitle}
           onChange={(e) => setNewSubTitle(e.target.value)}
         />
         <button onClick={onSubmitPosts}>SUBMIT POSTS</button>
       </div>
       <div>
-        {postsLists.map((posts) => (
-          <div key={posts.id}>
-            <h1>{posts.title}</h1>
-            <p>{posts.subtitle}</p>
-            <p>Publicado por: {posts.author}</p> {/* Mostrar el autor */}
-            <button onClick={() => deletePost(posts.id)}>Eliminar</button>
-          </div>
+        {postsLists.map((post) => (
+          <Post key={post.id} post={post} onDelete={deletePost} />
         ))}
       </div>
     </div>
   );
 };
-export default Home;
 
-//como usar propTypes
 Home.propTypes = {
   correoUsuario: PropTypes.string,
 };
 
-// usar default PropTypes (opcional)
 Home.defaultProps = {
   correoUsuario: "any",
 };
+
+export default Home;
