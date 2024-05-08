@@ -1,28 +1,24 @@
-import React, { useState } from "react";
-import appFirebase from "./credentials";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Login from "./components/Login";
-import Home from "./components/Home";
+// import React, { useState } from "react";
+// import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { AppRouter } from "./components/routes/AppRouter";
 
-const auth = getAuth(appFirebase);
-
-Login;
-Home;
+// const auth = getAuth(appFirebase);
 
 const App = () => {
-  const [usuario, setUsuario] = useState(null);
+  // const [usuario, setUsuario] = useState(null);
 
-  onAuthStateChanged(auth, (usuarioFirebase) => {
-    if (usuarioFirebase) {
-      setUsuario(usuarioFirebase);
-    } else {
-      setUsuario(null);
-    }
-  });
+  // onAuthStateChanged(auth, (usuarioFirebase) => {
+  //   if (usuarioFirebase) {
+  //     setUsuario(usuarioFirebase);
+  //   } else {
+  //     setUsuario(null);
+  //   }
+  // });
 
   return (
     <div>
-      <div>{usuario ? <Home correoUsuario={usuario.email} /> : <Login />}</div>
+      <AppRouter/>
+      {/* <div>{usuario ? <Home correoUsuario={usuario.email} /> : <Login />}</div> */}
     </div>
   );
 };

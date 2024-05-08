@@ -56,7 +56,7 @@ const Home = ({ correoUsuario }) => {
   };
 
   return (
-    <div className="">
+    <div className=" ">
       Estás en la página Home{correoUsuario}
       <div>
         <button onClick={() => signOut(auth)}>Logout</button>
