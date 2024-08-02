@@ -6,7 +6,6 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-
 const auth = getAuth(appFirebase);
 
 const Login = () => {
@@ -16,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     const correo = e.target.email.value;
     const contrasena = e.target.password.value;
-
+    
     if (registrando) {
       try {
         await createUserWithEmailAndPassword(auth, correo, contrasena);
@@ -35,7 +34,7 @@ const Login = () => {
   return (
     <div className="bg-black grid justify-center items-center h-72 p-10 rounded-md">
       <h1 className="text-center text-red-600 font-bold">{registrando? 'REGISTRARSE': 'INICIAR SESION'}</h1>
-      <form className="grid gap-3 " action="" onSubmit={funcAuth}>
+      <form className="grid gap-3 " onSubmit={funcAuth}>
         <input className="text-black text-center" type="text" placeholder="Correo" id="email" />
         <input className="text-black text-center" type="password" placeholder="Contraseña" id="password" />
         <button>{registrando ? "registrate" : "iniciar sesion"}</button>

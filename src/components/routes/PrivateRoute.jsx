@@ -4,11 +4,10 @@ import { useAuth } from "../hooks/useAuth";
 const PrivateRoute = () => {
   const { usuario } = useAuth();
 
-  if (usuario === null) {
+  if (!usuario) {
     return <Navigate to="/" replace />;
-  } else {
-    return <Outlet />;
   }
+  return <Outlet />;
 };
 
 export default PrivateRoute;

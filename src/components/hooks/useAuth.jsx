@@ -1,10 +1,12 @@
+import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
 import appFirebase from "../../credentials";
+import PropTypes from "prop-types";
 
 const auth = getAuth(appFirebase);
+const AuthContext = createContext();
 
-export const useAuth = () => {
+export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
@@ -23,6 +25,17 @@ export const useAuth = () => {
     };
   }, []);
 
-  // console.log(usuario);
-  return { usuario };
+  return (
+    <AuthContext.Provider value={{ usuario }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };
